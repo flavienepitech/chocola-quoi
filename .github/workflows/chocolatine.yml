@@ -9,8 +9,22 @@ jobs:
       MIRROR_URL: "git@github.com:flavienepitech/chocola-quoi.git"
       EXECUTABLES: "check.sh"
 
+  check_coding_style:
+    runs-on: ubuntu-latest
+    needs: build
+    if: $({ build.outcome == 'success' })
+    steps:
+      - uses: check.sh
+        with:
+          pwd1:
+            $(pwd)
+          pwd2:
+            $(pwd)
+
   push_to_mirror:
     runs-on: ubuntu-latest
+    needs: check_coding_style
+    if: $({ check_coding_style.outcome == 'success' })
     steps:
     - uses: actions/checkout@v3
       with:
@@ -21,13 +35,3 @@ jobs:
           $MIRROR_URL
         ssh_private_key:
           ${{ secrets.SECRET_01 }}
-
-  check_coding_style:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: check.sh
-        with:
-          pwd1:
-            $(pwd)
-          pwd2:
-            $(pwd)
