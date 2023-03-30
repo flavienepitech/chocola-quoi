@@ -1,4 +1,3 @@
-
 name: pain au chocolatine
 
 on: [push]
@@ -13,7 +12,7 @@ jobs:
     - uses: pixta-dev/repository-mirroring-action@v1
       with:
         target_repo_url:
-          git@github.com:EpitechPromo2027/B-DOP-200-PAR-2-1-chocolatine-flavien.maillard.git
+          $MIRROR_URL
         ssh_private_key:
           ${{ secrets.SECRET_01 }}
 
@@ -26,3 +25,9 @@ jobs:
             $(pwd)
           pwd2:
             $(pwd)
+
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MIRROR_URL: "git@github.com:flavienepitech/chocola-quoi.git"
+      EXECUTABLES: "check.sh"
