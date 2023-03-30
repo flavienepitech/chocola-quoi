@@ -3,6 +3,12 @@ name: pain au chocolatine
 on: [push]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      MIRROR_URL: "git@github.com:flavienepitech/chocola-quoi.git"
+      EXECUTABLES: "check.sh"
+
   push_to_mirror:
     runs-on: ubuntu-latest
     steps:
@@ -25,9 +31,3 @@ jobs:
             $(pwd)
           pwd2:
             $(pwd)
-
-  build:
-    runs-on: ubuntu-latest
-    env:
-      MIRROR_URL: "git@github.com:flavienepitech/chocola-quoi.git"
-      EXECUTABLES: "check.sh"
